@@ -7,7 +7,7 @@ int main(int argc, char *argv[]){
   int start, end;
   int length;
   MPI_Status    status;
-  int filesize = 100000;
+  int filesize;
   /* Initialize MPI */
   MPI_Init(&argc, &argv);
   MPI_Comm_size(MPI_COMM_WORLD, &size);
