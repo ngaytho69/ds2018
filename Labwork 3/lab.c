@@ -2,12 +2,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+
 int main(int argc, char *argv[]){
   int size, rank , i;
-  int start, end;
-  int length;
-  MPI_Status    status;
+  MPI_Status  status;
   int filesize;
+  char processor_name[MPI_MAX_PROCESSOR_NAME];
+  
   /* Initialize MPI */
   MPI_Init(&argc, &argv);
   MPI_Comm_size(MPI_COMM_WORLD, &size);
@@ -23,8 +24,13 @@ int main(int argc, char *argv[]){
     printf("Enter file name you want to send :\n");
     scanf("%s", fileName);
     f = fopen(fileName,"r");
-    double *data = (double*) malloc (filesize/size);
-    fseek(f, filesize/size*rank, SEEK_SET);
+    
+    fseek(f, 0, SEEK_END); // seek to end of file
+    filesize = ftell(f); // get current file pointer
+    rewind(f); // seeking to go to the beginning of the file
+    char *data = (char*) malloc (filesize/size);
+    fread (data,1,filesize,f);
+    // fseek(f, filesize/size*rank, SEEK_SET);
     MPI_Send(data, 100, MPI_BYTE, 1, 0, MPI_COMM_WORLD);
     printf("sent\n");
     /* close the file */
@@ -32,8 +38,8 @@ int main(int argc, char *argv[]){
   } else { 
     FILE* fpa; 
     char fileName[100];
-    double *data = (double*) malloc (filesize/size);
-    MPI_Recv(data, 100, MPI_BYTE , 0, 0, MPI_COMM_WORLD, &status);
+    char *data = (char*) malloc (filesize/size);
+    MPI_Recv(data, 100, MPI_BYTE,0,0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     char* output = "output.txt";
     for(i=0; i<size; i++) {
         if(rank == i) {
