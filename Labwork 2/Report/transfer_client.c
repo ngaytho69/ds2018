@@ -40,7 +40,7 @@ void transfer_1(char *host, char *filename)
 
 		/* Succesfully got data from the file*/
 		if(transfer_arg.nbytes < MAXLEN) {
-			printf("\n Upload file successfully.\n");
+			printf("\n Upload file successfully. \n");
 			break;
 		}
 	}
