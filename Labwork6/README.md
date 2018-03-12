@@ -98,4 +98,14 @@ Verify the mounted GlusterFS filesystem.
 ```
 # df -h <mount directory>
 ```
+## Perform Benchmark
 
+To perform benchmark, we send a brick with large size through gluster.
+    
+```    
+sudo iozone -r 1024k -i 0 -i 1 -i 2 -t 4 -s 128M
+```
+
+```
+sudo iozone -r 1024k -i 0 -i 1 -i 2 -t 8 -s 128M
+```
