@@ -20,20 +20,20 @@ int main(int argc, char *argv[])
 	char revbuf[LENGTH]; 
 	struct sockaddr_in ad;
 	socklen_t ad_length = sizeof(ad);
-        struct hostent *hep;
+    struct hostent *hep;
 
-        /*Create  the socket */
+    /*Create  the socket */
 	sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
 	/* Socket address struct */	
 	hep = gethostbyname(argv[1]);
-        memset(&ad, 0, sizeof(ad));
-        ad.sin_family = AF_INET;
-        ad.sin_addr = *(struct in_addr *)hep->h_addr_list[0];
-        ad.sin_port = htons(12345);
+    memset(&ad, 0, sizeof(ad));
+    ad.sin_family = AF_INET;
+    ad.sin_addr = *(struct in_addr *)hep->h_addr_list[0];
+    ad.sin_port = htons(12345);
 	
 	/* Try to connect */	
-        connect(sockfd, (struct sockaddr *)&ad, ad_length);
+    connect(sockfd, (struct sockaddr *)&ad, ad_length);
 
 	/* Send File to Server */	
 	char* fs_name = "message.txt";

@@ -26,16 +26,16 @@ int main ()
 	socklen_t ad_length = sizeof(ad);
 	
 	/* Create the socket */
-        sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);
 	 	
 	/* Bind a special Port */
 	memset(&ad, 0, sizeof(ad));
-        ad.sin_family = AF_INET;
-        ad.sin_addr.s_addr = INADDR_ANY;
-        ad.sin_port = htons(12345);
-        bind(sockfd, (struct sockaddr *)&ad, ad_length);
+    ad.sin_family = AF_INET;
+    ad.sin_addr.s_addr = INADDR_ANY;
+    ad.sin_port = htons(12345);
+    bind(sockfd, (struct sockaddr *)&ad, ad_length);
 	
-        listen(sockfd, 0);
+    listen(sockfd, 0);
 	
 	while(1)
 	{
@@ -67,14 +67,14 @@ int main ()
 		}
 
 		    /* Send file to client */
-                    char* fs_name = "letter.txt";
+            char* fs_name = "letter.txt";
 		    char sdbuf[LENGTH]; // Send buffer
 		    printf("Sending %s to the client.\n", fs_name);
 		    FILE *fs = fopen(fs_name, "r");
 		    if(fs == NULL)
 		    {
 		        fprintf(stderr, "File %s not found on server.\n", fs_name);
-			exit(1);
+				exit(1);
 		    }
 
 		    bzero(sdbuf, LENGTH); 
